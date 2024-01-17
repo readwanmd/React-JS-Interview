@@ -1,0 +1,25 @@
+.grid {
+	display: grid;
+	width: auto;
+	padding: 20px;
+	gap: 20px;
+	border: 1px solid #000;
+}
+
+.cell {
+	background: transparent;
+	border: 1px solid #000;
+	width: 100px;
+	height: 100px;
+}
+
+.cell-active {
+	background: tomato;
+}
+
+.center {
+	display: grid;
+	place-items: center;
+	font-size: 60px;
+	background-color: #353535;
+}
