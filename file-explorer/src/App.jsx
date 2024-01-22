@@ -1,26 +1,65 @@
 import { useState } from 'react';
 import './App.css';
-import Folder from './components/Folder';
-import explorer from './data/folderData';
-import useTraverseTree from './hooks/useTraverseTree';
+import Folder_ from './components/Folder_';
+import explorer from './data/normalizeFolderData';
 
-function App() {
+const App = () => {
 	const [explorerData, setExplorerData] = useState(explorer);
 
-	const { insertNode } = useTraverseTree();
+	const handleDelete = (e, pId, cId) => {
+		e.stopPropagation();
 
-	const handleInsertNode = (folderId, item, isFolder) => {
-		const finalTree = insertNode(explorerData, folderId, item, isFolder);
+		const folderContainer = explorerData[pId];
+		const nextParent = {
+			...folderContainer,
+			items: folderContainer.items.filter((id) => id != cId),
+		};
 
-		setExplorerData(finalTree);
+		setExplorerData({
+			...explorerData,
+			[pId]: nextParent,
+		});
+	};
+
+	const handleAdd = (e, id, parentId, isFolder, setShowInput) => {
+		const folderContainer = explorerData[parentId];
+
+		if (e.keyCode === 13 && e.target.value) {
+			const newFolder = {
+				id,
+				name: e.target.value,
+				isFolder,
+				items: [],
+			};
+
+			const newExplorerData = {
+				...explorerData,
+				[id]: newFolder,
+				[folderContainer.id]: {
+					...folderContainer,
+					items: [...folderContainer.items, id],
+				},
+			};
+
+			setExplorerData(newExplorerData);
+
+			setShowInput({
+				visible: false,
+				isFolder: null,
+			});
+		}
 	};
 
 	return (
-		<>
+		<div>
 			<h1>File Explorer</h1>
-			<Folder explorer={explorerData} handleInsertNode={handleInsertNode} />
-		</>
+			<Folder_
+				explorerData={explorerData}
+				onDelete={handleDelete}
+				parentId={0}
+				handleAdd={handleAdd}
+			/>
+		</div>
 	);
-}
-
+};
 export default App;
