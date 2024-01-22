@@ -114,4 +114,4 @@ with normalize data no complex algo is required to modify elements
 1st approach is on <a href="src/old_App.jsx">Here [old_App.jsx]</a>,
 <a href="src/components\Folder.jsx">Here [Folder.jsx]</a> & <a href="src/hooks/useTraverseTree.js">Here [useTraverseTree.js]</a>
 
-![Screenshot](/public/Screenshot.png)
+![Screenshot](public/Screenshot.png)
